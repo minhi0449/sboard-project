@@ -24,13 +24,9 @@ public class UserController {
     private final AppInfo appInfo;
 
 
-    @Value("${spring.application.version}")
-    private String appVersion;
-
     @GetMapping("/user/login")
-    public String login(Model model) {
-
-        model.addAttribute("appVersion", appVersion);
+    public String login(Model model){
+        model.addAttribute(appInfo);
         return "/user/login";
     }
 
