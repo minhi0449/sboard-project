@@ -16,4 +16,5 @@ public class AppInfo {
 
     @Value("${spring.application.version}")
     private String appVersion;
+
 }
