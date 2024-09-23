@@ -1,111 +1,115 @@
 package com.sboard.service;
 
+import com.sboard.dto.TermsDTO;
 import com.sboard.dto.UserDTO;
+import com.sboard.entity.Terms;
 import com.sboard.entity.User;
+import com.sboard.repository.TermsRepository;
 import com.sboard.repository.UserRepository;
+import jakarta.mail.Message;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.concurrent.ThreadLocalRandom;
 
+@Log4j2
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
-    // 생성자 주입
     private final UserRepository userRepository;
+    private final TermsRepository termsRepository;
+
+    // JavaMailSender 주입
+    private final JavaMailSender javaMailSender;
+
     private final PasswordEncoder passwordEncoder;
 
-    public void insertUser(UserDTO userDTO) {
+
+    public void insertUser(UserDTO userDTO){
 
         String encoded = passwordEncoder.encode(userDTO.getPass());
         userDTO.setPass(encoded);
-        // DTO를 Entity로 변환
-        User entity = userDTO.toEntity();
-        // Entity 저장 (데이터베이스 Insert)
-        userRepository.save(entity);
+        userRepository.save(userDTO.toEntity());
+    }
 
-        //return saveUser.toDTO();
+    public void selectUser(){
+
+    }
+    public void selectAllUser(){
 
     }
 
+    public TermsDTO selectTerms(){
+        List<Terms> termsList = termsRepository.findAll();
+        return termsList.get(0).toDTO();
+    }
 
-    public UserDTO selectUserByType(String type,String value){
+    public int selectCountUser(String type, String value){
+
+        int count = 0;
+
         if(type.equals("uid")){
-            Optional<User> user = userRepository.findById(value);
-            if(user.isPresent()){
-                UserDTO userDTO = user.get().toDTO();
-                return userDTO;
-            }
+            count = userRepository.countByUid(value);
         }else if(type.equals("nick")){
-            Optional<User> user = userRepository.findByNick("value");
-            if(user.isPresent()){
-                UserDTO userDTO = user.get().toDTO();
-                return userDTO;
-            }
+            count = userRepository.countByNick(value);
+        }else if(type.equals("hp")){
+            count = userRepository.countByHp(value);
         }else if(type.equals("email")){
-            Optional<User> user = userRepository.findByEmail(value);
-            if(user.isPresent()){
-                UserDTO userDTO = user.get().toDTO();
-                return userDTO;
-            }
-
+            count = userRepository.countByEmail(value);
         }
+        return count;
+    }
 
-        return null;
+
+    public void updateUser(){
+
+    }
+
+    public void deleteUser(){
 
     }
 
 
-    public UserDTO selectUser(String Uid) {
+    /*
+        - build.gradle 파일에 spring-boot-starter-mail 의존성 추가 할것
+        - application.yml 파일 spring email 관련 설정
+     */
+    @Value("${spring.mail.username}")
+    private String sender;
+    public void sendEmailCode(HttpSession session, String receiver){
 
-        Optional<User> opt = userRepository.findById(Uid);
+        log.info("sender : " + sender);
 
-        // Entity 존재 여부 화인
-        if(opt.isPresent()) {
-            // Optional 타입으로 정의된 Entity 가져오기
-            User user = opt.get();
+        // MimeMessage 생성
+        MimeMessage message = javaMailSender.createMimeMessage();
 
-            // Entity 를 DTO 로 변환해서 반환
-            return user.toDTO();
-        }
-        return null;
-    }
+        // 인증코드 생성 후 세션 저장
+        int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
+        session.setAttribute("code", String.valueOf(code));
+        log.info("code : " + code);
 
-    public List<UserDTO> selectUsers() {
-        // Entity 전체 조회
-        List<User> users = userRepository.findAll();
+        String title = "sboard 인증코드 입니다.";
+        String content = "<h1>인증코드는 " + code + "입니다.</h1>";
 
-        // List Stream (내부반복자)를 이용한 Entity 리스트를 DTO 리스트로 반환
-        List<UserDTO> UserDTOs = users
-                                .stream()
-                                .map(entity -> entity.toDTO())
-                                .collect(Collectors.toList());
-        return UserDTOs;
-    }
+        try {
+            message.setFrom(new InternetAddress(sender, "보내는 사람", "UTF-8"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
+            message.setSubject(title);
+            message.setContent(content, "text/html;charset=UTF-8");
 
-    public void updateUser(UserDTO userDTO) {
-
-        // Entity 존재 여부 확인
-        boolean result = userRepository.existsById(userDTO.getUid());
-
-        if(result){
-            // DTO 를 Entity로 변환
-            User entity = userDTO.toEntity();
-            // Entity 수정 (데이터베이스 Update)
-            userRepository.save(entity);
+            // 메일 발송
+            javaMailSender.send(message);
+        }catch(Exception e){
+            log.error("sendEmailConde : " + e.getMessage());
         }
     }
-
-
-    public void deleteUser(String uid) {
-        // Entity 삭제 (데이터베이스 Delete)
-        userRepository.deleteById(uid);
-    }
-
-
 }

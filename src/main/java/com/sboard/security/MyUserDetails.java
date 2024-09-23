@@ -42,19 +42,19 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        // 계정 만료 여부(true: 만료안됨, false: 만료)
+        // 계정 만료 여부(true: 만료 안 됨, false: 만료)
         return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // 계정 잠김 여부(true: 잠김아님, false: 잠김)
+        // 계정 잠김 여부(true: 잠김 아님, false: 잠김)
         return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // 비밀번호 만료 여부(true: 만료안됨, false: 만료)
+        // 비밀번호 만료 여부(true: 만료 안 됨, false: 만료)
         return true;
     }
 

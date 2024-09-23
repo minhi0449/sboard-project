@@ -18,3 +18,5 @@ public class AppInfo {
     private String appVersion;
 
 }
+
+

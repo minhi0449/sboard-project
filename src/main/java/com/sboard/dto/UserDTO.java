@@ -20,13 +20,18 @@ public class UserDTO {
     private String nick;
     private String email;
     private String hp;
-    private String role;
+
+    @Builder.Default
+    private String role = "USER";
+
     private String zip;
     private String addr1;
     private String addr2;
     private String regip;
     private LocalDateTime regDate;
     private LocalDateTime leaveDate;
+
+
 
     // 변환 메서드
     public User toEntity() {
