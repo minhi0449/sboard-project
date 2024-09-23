@@ -19,7 +19,9 @@
             <nav>
                 <h1>글쓰기</h1>
             </nav>
-            <form action="#">
+            <form th:action="@{/article/write}" method="post">
+                <input type="hidden" name="writer" th:value="${#authentication.principal.user.uid}"/>
+                <!-- 화면에 노출되는 데이터는 아님  -->
                 <table border="0">
                     <tr>
                         <th>제목</th>
@@ -34,6 +36,7 @@
                     <tr>
                         <th>파일</th>
                         <td>
+                            <input type="file" name="file"/>
                             <input type="file" name="file"/>
                         </td>
                     </tr>
