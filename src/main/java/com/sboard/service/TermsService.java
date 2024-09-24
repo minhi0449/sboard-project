@@ -14,4 +14,6 @@ public class TermsService {
     public Terms terms() {
         return termsRepository.findAll().get(0);
     }
+
+
 }

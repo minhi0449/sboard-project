@@ -1,7 +1,10 @@
 package com.sboard.controller;
 
+import com.sboard.config.AppInfo;
 import com.sboard.dto.ArticleDTO;
 import com.sboard.dto.FileDTO;
+import com.sboard.dto.PageRequestDTO;
+import com.sboard.dto.PageResponseDTO;
 import com.sboard.service.ArticleService;
 import com.sboard.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,32 +18,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Log4j2
-@Controller
 @RequiredArgsConstructor
+@Controller
 public class ArticleController {
 
-    // service 선언
     private final ArticleService articleService;
     private final FileService fileService;
 
 
     @GetMapping("/article/list")
-    public String list(Model model) {
+    public String list(Model model, PageRequestDTO pageRequestDTO) {
+        // 타입과 키워드 (type, Keyword) PageRequestDTO 안에다가 선언
+
+        /*
+        if(pageRequestDTO.getKeyword() == null) {
+            // 일반 글 목록 조회
+            PageResponseDTO pageResponseDTO = articleService.selectArticleAll(pageRequestDTO);
+            model.addAttribute(pageResponseDTO);
+        }else {
+            // 검색 글 목록 조회 (일반/검색 글 조회하는 거 구분해야 함)
+        }
+        */
+        PageResponseDTO pageResponseDTO = articleService.selectArticleAll(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/article/list";
     }
 
     @GetMapping("/article/write")
     public String write(){
+
         return "/article/write";
     }
 
-
-    // 폼 데이터가 수신 되는지
     @PostMapping("/article/write")
-    public String write(ArticleDTO articleDTO, HttpServletRequest req) {
+    public String write(ArticleDTO articleDTO, HttpServletRequest req){
         String regip = req.getRemoteAddr();
         articleDTO.setRegip(regip);
-
         log.info(articleDTO);
 
         // 파일 업로드
@@ -59,7 +72,7 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
-    
+
     @GetMapping("/article/view")
     public String view(){
         return "/article/view";

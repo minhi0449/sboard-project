@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>약관</title>
-    <link rel="stylesheet" th:href="@../css/style.css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <div id="wrapper">
@@ -18,7 +18,7 @@
                     <td>
                         <!--<textarea name="terms">${terms.terms}</textarea>-->
                         <!-- 약관 내용을 terms.terms에서 가져와서 출력 -->
-                        <textarea th:text="${terms.terms}" readonly></textarea>
+                        <textarea th:text="${termsDTO.terms}" readonly></textarea>
                         <label><input type="checkbox" class="terms">&nbsp;동의합니다.</label>
                     </td>
                 </tr>

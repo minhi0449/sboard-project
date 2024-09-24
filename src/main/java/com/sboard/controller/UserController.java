@@ -1,44 +1,43 @@
 package com.sboard.controller;
 
 import com.sboard.config.AppInfo;
+import com.sboard.dto.TermsDTO;
 import com.sboard.dto.UserDTO;
-import com.sboard.entity.Terms;
-import com.sboard.service.TermsService;
 import com.sboard.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 @RequiredArgsConstructor
 @Controller
 public class UserController {
 
-    private final UserService userService;
-    private final TermsService termsService; // 약관을 처리하는 서비스
 
-    private final AppInfo appInfo;
+    private final UserService userService;
 
 
     @GetMapping("/user/login")
-    public String login(Model model){
-        model.addAttribute(appInfo);
+    public String login(){
         return "/user/login";
     }
 
-    @GetMapping("/user/success")
-    public String success(){
-        return "redirect:/article/list";
-    }
     @GetMapping("/user/terms")
     public String terms(Model model){
-        Terms terms = termsService.terms(); // 약관 및 개인정보 처리방침 가져오기
-        model.addAttribute("terms", terms); // Model에 데이터 추가
-        return "/user/terms"; // 타임리프 템플릿 파일명 (terms.html)
+
+        TermsDTO terms2DTO = userService.selectTerms();
+        model.addAttribute(terms2DTO);
+        return "/user/terms";
     }
 
     @GetMapping("/user/register")
@@ -46,20 +45,69 @@ public class UserController {
         return "/user/register";
     }
 
-    // 회원가입 폼 제출 시
     @PostMapping("/user/register")
-    public String register(UserDTO userDTO){
+    public String register(HttpServletRequest req, UserDTO userDTO){
 
-       log.info(userDTO);
+        log.info(userDTO);
+
+        String regip = req.getRemoteAddr();
+        userDTO.setRegip(regip);
+
+        log.info(userDTO.toString());
 
         userService.insertUser(userDTO);
-        return "redirect:/user/login";
-//        // 저장 실패 100 / 저장 성공 200
-//        if(savedUser != null){
-//            model.addAttribute("user", savedUser);
-//            return "redirect:/user/login?success=100";
-//        }
-//        // 회원가입 데이터를 저장한 후, 결과에 따라 로그인 페이지로 리다이렉트
-//        return "/user/login?success=200";
+
+        return "redirect:/user/login?success=200";
+    }
+
+    @ResponseBody
+    @GetMapping("/user/{type}/{value}")
+    public ResponseEntity<?> checkUser(HttpSession session,
+                                       @PathVariable("type")  String type,
+                                       @PathVariable("value") String value){
+
+        log.info("type : " + type + ", value : " + value);
+
+        int count = userService.selectCountUser(type, value);
+        log.info("count : " + count);
+
+        // 중복 없으면 이메일 인증코드 발송
+        if(count == 0 && type.equals("email")){
+            log.info("email : " + value);
+            userService.sendEmailCode(session, value);
+        }
+
+        // Json 생성
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", count);
+
+        return ResponseEntity.ok().body(resultMap);
+    }
+
+    // 이메일 인증 코드 검사
+    @ResponseBody
+    @PostMapping("/email")
+    public ResponseEntity<?> checkEmail(HttpSession session, @RequestBody Map<String, String> jsonData){
+
+        log.info("checkEmail code : " + jsonData);
+
+        String receiveCode = jsonData.get("code");
+        log.info("checkEmail receiveCode : " + receiveCode);
+
+        String sessionCode = (String) session.getAttribute("code");
+
+        if(sessionCode.equals(receiveCode)){
+            // Json 생성
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("result", true);
+
+            return ResponseEntity.ok().body(resultMap);
+        }else{
+            // Json 생성
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("result", false);
+
+            return ResponseEntity.ok().body(resultMap);
+        }
     }
 }
