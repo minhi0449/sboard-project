@@ -24,9 +24,9 @@ spring:
         version: ${version}
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/jboard
+        url: jdbc:mysql://3.36.91.69:3306/jboard
         username: root
-        password: "1234"
+        password: "Rlaalsgml312!"
     devtools:
         livereload:
             enabled: true
