@@ -16,28 +16,79 @@
 | **MongoDB** | latest |  |  |
 
 ### S/W Stack, 사용한 라이브러리 정보
-# S/W Stack, 사용한 라이브러리 정보
+<h1>S/W Stack, 사용한 라이브러리 정보</h1>
 
-| 구분 | 서비스 정보 |
-|------|------|
-| **Language** | Java 17 |
-|              | Servlet |
-|              | JSP |
-| **Front**    | HTML5 |
-|              | CSS3 |
-|              | JavaScript(ES6) |
-| **Library**  | mysql-connector-j - 8.3.0 |
-|              | querydsl-jpa - 5.1.0 |
-|              | modelmapper:3.2.0 |
-|              | data-jpa |
-|              | thymeleaf |
-|              | security |
-|              | thymeleaf-extras-springsecurity6 |
-|              | p6spy-spring-boot-starter:1.9.0 |
-| **DBMS**     | MySQL 8.0, Redis |
-| **Tool**     | IntelliJ-ultimate |
-|              | MySQL Workbench |
-|              | HeidSQL |
-|              | RedisInsight |
-|              | Git |
-|              | Github |
+<table>
+  <tr>
+    <td rowspan="3">Language</td>
+    <td>Java 17</td>
+  </tr>
+  <tr>
+    <td>Servlet</td>
+  </tr>
+  <tr>
+    <td>JSP</td>
+  </tr>
+  
+  <tr>
+    <td rowspan="3">Front</td>
+    <td>HTML5</td>
+  </tr>
+  <tr>
+    <td>CSS3</td>
+  </tr>
+  <tr>
+    <td>JavaScript(ES6)</td>
+  </tr>
+  
+  <tr>
+    <td rowspan="8">Library</td>
+    <td>mysql-connector-j - 8.3.0</td>
+  </tr>
+  <tr>
+    <td>querydsl-jpa - 5.1.0</td>
+  </tr>
+  <tr>
+    <td>modelmapper:3.2.0</td>
+  </tr>
+  <tr>
+    <td>data-jpa</td>
+  </tr>
+  <tr>
+    <td>thymeleaf</td>
+  </tr>
+  <tr>
+    <td>security</td>
+  </tr>
+  <tr>
+    <td>thymeleaf-extras-springsecurity6</td>
+  </tr>
+  <tr>
+    <td>p6spy-spring-boot-starter:1.9.0</td>
+  </tr>
+  
+  <tr>
+    <td>DBMS</td>
+    <td>MySQL 8.0, Redis</td>
+  </tr>
+  
+  <tr>
+    <td rowspan="6">Tool</td>
+    <td>IntelliJ-ultimate</td>
+  </tr>
+  <tr>
+    <td>MySQL Workbench</td>
+  </tr>
+  <tr>
+    <td>HeidSQL</td>
+  </tr>
+  <tr>
+    <td>RedisInsight</td>
+  </tr>
+  <tr>
+    <td>Git</td>
+  </tr>
+  <tr>
+    <td>Github</td>
+  </tr>
+</table>
