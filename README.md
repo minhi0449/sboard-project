@@ -14,3 +14,30 @@
 | **Lombok** | latest |  |  |
 | **MySQL** | 8.0+ |  |  |
 | **MongoDB** | latest |  |  |
+
+### S/W Stack, 사용한 라이브러리 정보
+| Language | Java 17 |
+|          | Servlet |
+|          | JSP |
+|---|---|
+| Front | HTML5 |
+|       | CSS3 |
+|       | JavaScript(ES6) |
+|---|---|
+| Library | mysql-connector-j - 8.3.0 |
+|         | querydsl-jpa - 5.1.0 |
+|         | modelmapper:3.2.0 |
+|         | data-jpa |
+|         | thymeleaf |
+|         | security |
+|         | thymeleaf-extras-springsecurity6 |
+|         | p6spy-spring-boot-starter:1.9.0 |
+|---|---|
+| DBMS | MySQL 8.0, Redis |
+|---|---|
+| Tool | IntelliJ-ultimate |
+|      | MySQL Workbench |
+|      | HeidSQL |
+|      | RedisInsight |
+|      | Git |
+|      | Github |
