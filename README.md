@@ -21,79 +21,58 @@
 | **MySQL** | 8.0+ |  |  |
 | **MongoDB** | latest |  |  |
 
-### ✦ S/W Stack, 사용한 라이브러리 정보
+## 📋 주요 기능 및 구현 내용
 
-<table>
-  <tr>
-    <td rowspan="3">Language</td>
-    <td>Java 17</td>
-  </tr>
-  <tr>
-    <td>Servlet</td>
-  </tr>
-  <tr>
-    <td>JSP</td>
-  </tr>
-  
-  <tr>
-    <td rowspan="3">Front</td>
-    <td>HTML5</td>
-  </tr>
-  <tr>
-    <td>CSS3</td>
-  </tr>
-  <tr>
-    <td>JavaScript(ES6)</td>
-  </tr>
-  
-  <tr>
-    <td rowspan="8">Library</td>
-    <td>mysql-connector-j - 8.3.0</td>
-  </tr>
-  <tr>
-    <td>querydsl-jpa - 5.1.0</td>
-  </tr>
-  <tr>
-    <td>modelmapper:3.2.0</td>
-  </tr>
-  <tr>
-    <td>data-jpa</td>
-  </tr>
-  <tr>
-    <td>thymeleaf</td>
-  </tr>
-  <tr>
-    <td>security</td>
-  </tr>
-  <tr>
-    <td>thymeleaf-extras-springsecurity6</td>
-  </tr>
-  <tr>
-    <td>p6spy-spring-boot-starter:1.9.0</td>
-  </tr>
-  
-  <tr>
-    <td>DBMS</td>
-    <td>MySQL 8.0, Redis</td>
-  </tr>
-  
-  <tr>
-    <td rowspan="6">Tool</td>
-    <td>IntelliJ-ultimate</td>
-  </tr>
-  <tr>
-    <td>MySQL Workbench</td>
-  </tr>
-  <tr>
-    <td>HeidSQL</td>
-  </tr>
-  <tr>
-    <td>RedisInsight</td>
-  </tr>
-  <tr>
-    <td>Git</td>
-  </tr>
-  <tr>
-    <td>Github</td>
-  </tr>
-</table>
+### 1. 게시판 기능
+| 기능 | 설명 |
+|------|------|
+| **게시글 목록 조회** | 페이징 처리 |
+| **게시글 작성/수정/삭제** | CRUD 기능 제공 |
+| **게시글 검색** | QueryDSL을 활용한 동적 쿼리 구현 |
+
+### 2. 파일 관리
+| 기능 | 설명 |
+|------|------|
+| **다중 파일 업로드** | 게시글 작성 시 다중 파일 업로드 가능 |
+| **파일 다운로드** | 업로드된 파일 다운로드 기능 |
+| **파일 메타데이터 관리** | 업로드된 파일 정보 데이터베이스 저장 |
+
+### 3. 사용자 관리
+| 기능 | 설명 |
+|------|------|
+| **회원가입/로그인/로그아웃** | Spring Security 활용 |
+| **사용자 권한 관리** | ROLE 기반 접근 제어 |
+| **중복 검사** | 아이디, 닉네임, 이메일, 전화번호 중복 검사 |
+
+### 4. 보안 기능
+| 기능 | 설명 |
+|------|------|
+| **비밀번호 보안** | BCrypt 암호화 적용 |
+| **인증된 사용자만 접근 가능** | Spring Security 기반 접근 제어 |
+| **커스텀 UserDetails** | 사용자 정보 관리 |
+
+### 5. 인터셉터 활용
+| 기능 | 설명 |
+|------|------|
+| **공통 정보 제공** | `AppInfoInterceptor`를 통해 애플리케이션 정보 자동 주입 |
+
+### 6. QueryDSL 활용
+| 기능 | 설명 |
+|------|------|
+| **동적 쿼리 구현** | 타입 안전한 동적 쿼리 작성 |
+| **복잡한 검색 조건 처리** | Tuple 결과 처리 가능 |
+
+## 💻 실행 방법
+
+### 요구사항
+| 항목 | 버전 |
+|------|------|
+| **JDK** | 17 이상 |
+| **MySQL** | 8.0 이상 |
+| **Maven** | 3.8 이상 |
+
+### 설치 및 실행
+
+#### 1. 저장소 클론
+```bash
+git clone https://github.com/사용자명/sboard-project.git
