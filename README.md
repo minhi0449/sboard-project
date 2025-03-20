@@ -5,20 +5,20 @@ Spring Boot 기반의 게시판 프로젝트입니다. JPA, QueryDSL, ModelMappe
 ## 📌 프로젝트 개요
 
 - **프로젝트 명**: Sboard Project
-- **개발 기간**: 2024.09.20 ~ 2024.09.27
-- **개발 인원**: 1명(개인 프로젝트)
+- **개발 기간**: 2024.09.20 ~ 2024.09.27 (7일간)
+- **개발 인원**: 1명 (개인 프로젝트)
 - **주요 기능**: 게시글 CRUD, 파일 업로드/다운로드, 페이징, 검색, 인터셉터 활용 등
 
 ## 🛠 기술 스택
 
 ### Backend
-- Java 17
+- Java `17`
 - Spring Boot `3.4.1`
-- Spring Data JPA 3.4.4
-- QueryDSL 4.4.0
-- ModelMapper 3.2.0
+- Spring Data JPA `3.4.4`
+- QueryDSL `4.4.0`
+- ModelMapper `3.2.0`
 - Lombok
-- MySQL 8.0
+- MySQL `8.0`
 
 ### Frontend
 - Thymeleaf
