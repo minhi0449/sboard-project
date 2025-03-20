@@ -14,11 +14,11 @@ Spring Boot 기반의 게시판 프로젝트입니다. JPA, QueryDSL, ModelMappe
 ### Backend
 - Java 17
 - Spring Boot 3.4.1
-- Spring Data JPA
-- QueryDSL (타입 안전한 쿼리 작성)
-- ModelMapper (DTO-Entity 변환)
+- Spring Data JPA 3.4.4
+- QueryDSL 4.4.0
+- ModelMapper 3.2.0
 - Lombok
-- MySQL
+- MySQL 8.0
 
 ### Frontend
 - Thymeleaf
