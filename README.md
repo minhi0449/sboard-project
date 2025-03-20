@@ -16,7 +16,6 @@
 | **MongoDB** | latest |  |  |
 
 ### S/W Stack, 사용한 라이브러리 정보
-<h1>S/W Stack, 사용한 라이브러리 정보</h1>
 
 <table>
   <tr>
